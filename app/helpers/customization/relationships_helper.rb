@@ -1,0 +1,2 @@
+module Customization::RelationshipsHelper
+end

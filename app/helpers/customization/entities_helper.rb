@@ -1,0 +1,2 @@
+module Customization::EntitiesHelper
+end

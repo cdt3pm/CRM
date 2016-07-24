@@ -1,0 +1,59 @@
+<div class="container-fluid form-builder-top">
+	<div class="col-xs-2 form-builder-nav">
+		<div class="panel-group" id="toolbox" role="tablist">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="fieldsHeader">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="toolbox" href="#fields">Fields</a>
+					</h4>
+				</div>
+				<div id="fields" class="panel-collapse collapse in" role="tabpanel" aria-labeledby="fieldsHeader">
+					<div class="panel-body">
+						<% @fields.each do |field| %>
+							<div class="form-builder-field">
+								<%= field.display_name %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="resourcesHeader">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="toolbox" href="#resources">Resources</a>
+					</h4>
+				</div>
+				<div id="resources" class="panel-collapse collapse in" role="tabpanel" aria-labeledby="resourcesHeader">
+					<div class="panel-body">
+						<!-- list resources here -->
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="containersHeader">
+					<h4 class="panel-title">
+						<a role="button" data-toggle="collapse" data-parent="toolbox" href="#containers">Containers</a>
+					</h4>
+				</div>
+				<div id="containers" class="panel-collapse collapse in" role="tabpanel" aria-labeledby="resourcesHeader">
+					<div class="panel-body">
+						<div class="form-builder-container">
+							Section
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-8 form-builder-body">
+		<div class="panel-heading">
+			<h2 class="panel-title"></h2>
+		</div>
+		<div class="panel">
+			<div id="builder">
+				<span id="helpText">Drag a container here to start</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-2 form-builder-properties"></div>
+</div>

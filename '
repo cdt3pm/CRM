@@ -1,0 +1,112 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+//= require jquery-ui/ui/draggable
+//= require jquery-ui/ui/droppable
+
+class FormElement
+	@selector: '.form-builder-element'
+	@generateName: ->
+		randomHexString = Math.random().toString(16)
+		randomHexString.substring(2, randomHexString.length)
+	constructor: (@destination, @onForm = false) ->
+		self = this
+		@destination.draggable
+			revert: 'invalid'
+			zIndex: 100
+
+class FieldElement extends FormElement
+	@selector: '.form-builder-field'
+	constructor: (@destination, @onForm) ->
+		super @destination, @onForm
+		@destination.draggable 'option', 'snap', FieldElement.selector
+		@fieldName = @destination.attr 'data-field-name'
+		@displayName = @destinaton.attr 'data-display-name'
+
+
+class ResourceElement extends FormElement
+	@selector: '.form-builder-resource'
+	constructor: (@destination) -> super @destination
+
+class ContainerElement extends FormElement
+	@accepts: FieldElement.selector + ',' + ResourceElement.selector
+	@selector: '.form-builder-container'
+	@initDroppable: (destination) ->
+		destination.droppable
+			accepts: ContainerElement.accepts
+			drop: FormBuilder.createDropCallback ContainerElement
+	constructor: (@destination, @onForm = false) ->
+		self = this
+		super @destination, @onForm
+		@destination.draggable 'option', 'helper', 'clone'
+		@destination.draggable 'option', 'snap', ContainerElement.selector
+	generateName: -> 'Container' + super
+
+# Properties for each element will be static
+# All necessary data will be on data-property-{property-name} attributes on element
+# Element classes will build the properties from the elements
+
+class Property
+	constructor: (@name, @type, @value, @options = {}) ->
+	render: (destination) ->
+	getSelector: ->
+		switch @type
+			when 'text'
+			when 'number'
+			when 'dropdown'
+			when 'list'
+			when 'area'
+
+class FormBuilder
+	@instance: null
+	@accepts: ContainerElement.selector
+	@selector: '#builder'
+	@createDropCallback (type, callback = null) ->
+		(e, ui) ->
+			try
+				element = FormBuilder.childDropped ui, type
+				callback element if callback
+			catch error
+				console.log error
+				false
+	@childDropped: (ui, droppableObjectType) ->
+		element = $(ui.draggable).clone()
+		elementAtDrop = FormBuilder.elementAtPoint
+			ui.position.left,
+			ui.position.top,
+			droppableObjectType.accepts,
+			droppableObjectType.selector
+
+		throw new Exception('Could not find matching element at point') unless elementAtDrop.length
+
+		if elementAtDrop.filter(droppableObjectType.selector).length
+			elementAtDrop.append(element)
+		else
+			elementAtDrop.after(element)
+
+		element
+	@elementAtPoint: (x, y, selectors...) ->
+		element = $ document.elementFromPoint(x, y)
+
+		if selectors.length
+			closest = null
+
+			for selector in selectors
+				closest = element.closest selector
+				break if closest.length
+
+			closest
+		else if element.length then element else null
+	@init: (destination) -> @instance = new FormBuilder destination
+	constructor: (@destination) ->
+		self = this
+		@destination.droppable
+			accepts: FormBuilder.accepts
+			drop: FormBuilder.createDropCallback FormBuilder, (element) -> ContainerElement.initDroppable(element)
+
+$(document).ready ->
+	FormBuilder.init $('#builder')
+	$('#containers').find(ContainerElement.selector).each (i, el) -> new ContainerElement $(el)
+	$('#fields').find(FieldElement.selector).each (i, el) -> new FieldElement $(el)
+	$('#resources').find(ResourceElement.selector).each (i, el) -> new ResourceElement $(el)

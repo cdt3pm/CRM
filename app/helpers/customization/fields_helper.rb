@@ -1,0 +1,2 @@
+module Customization::FieldsHelper
+end

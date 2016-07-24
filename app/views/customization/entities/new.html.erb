@@ -1,0 +1,32 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<h3>New Entity</h3>
+		<%= form_for [:customization, @entity] do |f| %>
+			<%= f.label :_id %>
+			<%= f.text_field :_id %>
+
+			<%= f.label :display_name %>
+			<%= f.text_field :display_name %>
+
+			<%= f.label :plural_display_name %>
+			<%= f.text_field :plural_display_name %>
+			<%= f.submit %>
+		<% end %>
+		<!--
+		<form method="post" action="/customization/entities">
+			<label for="_id">Name</label>
+			<input id="_id" name="entity[_id]" />
+			
+			<label for="display_name">Display Name</label>
+			<input id="display_name" name="entity[display_name]" />
+
+			<label for="plural_display_name">Plural Display Name</label>
+			<input id="plural_display_name" name="entity[plural_display_name]" />
+
+			<input type="submit" value="Create" />
+		</form>
+		-->
+	</body>
+</html>

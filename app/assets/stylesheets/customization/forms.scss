@@ -1,0 +1,11 @@
+// Place all the styles related to the customization/forms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+html, body { height: 100%; }
+.form-builder-nav, .form-builder-properties { min-height: 100%; }
+.form-builder-top { min-height: 100%; }
+.form-builder-body { min-height: 100%; } 
+.form-builder-field { padding: 10px; }
+#builder { width: 100%; height: 100%; border-style: solid; border-width: 2px; }
+#builder .form-builder-container { width: 90%; border-style: solid; border-width: 2px; }
