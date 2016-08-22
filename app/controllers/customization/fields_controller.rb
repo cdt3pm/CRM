@@ -1,6 +1,6 @@
 class Customization::FieldsController < ApplicationController
 	def new
-		entity = params.require(:entity)
+		entity = params.require(:entity_id)
 		@field = Field.new(entity: entity)
 	end
 

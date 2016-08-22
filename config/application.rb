@@ -29,9 +29,10 @@ module Crm
 		config.cache_classes = true
 
 		# Load classes, fields and relationships
-		#config.after_initialize do
-		#	Entity.all.each(&:add_constant_for_entity)
-		#	Field.all.each(&:add_field_to_entity)
-		#end
+		config.after_initialize do
+			Entity.all.each(&:add_constant_for_entity)
+			Field.all.each(&:add_to_entity_class)
+			Relationship.all.each(&:add_to_entity_classes)
+		end
   end
 end

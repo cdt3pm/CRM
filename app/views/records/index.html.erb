@@ -1,0 +1,9 @@
+<h4><%= @entity.plural_display_name %></h4>
+
+<ul>
+	<% @records.each do |record| %>
+		<li><%= link_to record.id, "/#{@entity.id}/#{record.id}" %></li>
+	<% end %>
+</ul>
+
+<%= link_to "New", "/#{@entity.id}/new" %>

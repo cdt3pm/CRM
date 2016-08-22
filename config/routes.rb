@@ -4,14 +4,15 @@ Rails.application.routes.draw do
 	root 'entities#index', module: :customization
 
 	namespace :customization do
-		resources :entities, except: [:view] { resources :fields, :relationships, :forms, :views, except: [:view] }
+		resources :entities, except: [:view] { resources :fields, :forms, :views, except: [:view] }
 		resources :client_resources
 		resources :processing_steps
+		resources :relationships
 	end
 
-	get '/:entity/index', to: 'records#index'
+	get '/:entity', to: 'records#index'
 	get '/:entity/new', to: 'records#new'
-	post '/:entity/create', to: 'records#create'
+	post '/:entity', to: 'records#create'
 	get '/:entity/:id', to: 'records#edit'
 	put '/:entity/:id', to: 'records#update'
 	delete '/:entity/:id', to: 'records#delete'

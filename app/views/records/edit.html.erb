@@ -1,5 +1,5 @@
-<h3>New <%= @entity.display_name %></h3>
-<%= form_for @record, url: "/#{@entity.id}" do |f| %>
+<h3>Edit <%= @entity.display_name %></h3>
+<%= form_for @record, url: "/#{@entity}" do |f| %>
 	<% @fields.each do |field| %>
 		<%= f.label field.name, field.display_name %>
 		<%= f.public_send field.get_field_method_from_type, field.name %>

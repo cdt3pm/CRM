@@ -4,22 +4,25 @@ class Customization::EntitiesController < ApplicationController
 	end
 
 	def create
-		@entity = Entity.new(
+		entity = Entity.new(
 			params.require(:entity)
 				.permit(:_id, :display_name, :plural_display_name)
 		)
-		@entity.save
+		entity.save
 		redirect_to action: 'edit'
 	end
 
 	def edit
-		@entity = Entity.find(_id: params[:id])
+		@entity = Entity.find(params[:id])
 	end
 
 	def update
-		@entity = params.require(:entity)
+		entity = params.require(:entity).permit(:_id, :display_name, :plural_display_name)
+		entity.save
 	end
 
 	def delete
+		entity = Entity.find(params.require(:entity))
+		entity.delete
 	end
 end

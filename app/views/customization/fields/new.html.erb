@@ -2,8 +2,8 @@
 	<head>
 	</head>
 	<body>
-		<h3>New Entity</h3>
-		<%= form_for [:customization, @field] do |f| %>
+		<h3>New Field</h3>
+		<%= form_for [:customization, :entity, @field] do |f| %>
 			<%= f.label :name %>
 			<%= f.text_field :name %>
 			
@@ -11,7 +11,7 @@
 			<%= f.text_field :display_name %>
 
 			<%= f.label :type %>
-			<%= f.text_field :type %>
+			<%= f.select :type, Field::TYPES %>
 
 			<%= f.hidden_field :entity %>
 			<%= f.submit %>

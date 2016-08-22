@@ -1,8 +1,18 @@
-<html>
-	<head>
-	</head>
-	<body>
-		<form>
-		</form>
-	</body>
-</html>
+<%= form_for [:customization, @relationship] do |f| %>
+	<%= f.label :from %>
+	<%= f.select :from, Entity.all.collect { |e| [ e.display_name, e.id ] } %>
+
+	<%= f.label :from_name, "Name on from entity" %>
+	<%= f.text_field :from_name %>
+
+	<%= f.label :to %>
+	<%= f.select :to, Entity.all.collect { |e| [ e.display_name, e.id ] } %>
+
+	<%= f.label :to_name, "Name on to entity" %>
+	<%= f.text_field :to_name %>
+
+	<%= f.label :type %>
+	<%= f.select :type, Relationship::TYPES %>
+
+	<%= f.submit %>
+<% end %>
